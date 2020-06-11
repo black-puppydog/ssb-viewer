@@ -101,7 +101,7 @@ e.g. `--viewer.port 8807`.
 
 ## License
 
-Copyright (c) 2016-2017 Secure Scuttlebutt Consortium
+Copyright (c) 2016-2020 Secure Scuttlebutt Consortium
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as

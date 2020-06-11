@@ -4,6 +4,11 @@
   "description": "serve ssb threads as (embeddable) web pages",
   "main": "index.js",
   "bin": "bin.js",
+  "homepage": "https://git.scuttlebot.io/%25MeCTQrz9uszf9EZoTnKCeFeIedhnKWuB3JHW2l1g9NA%3D.sha256",
+  "repository": {
+    "type": "git",
+    "url": "ssb://%MeCTQrz9uszf9EZoTnKCeFeIedhnKWuB3JHW2l1g9NA=.sha256"
+  },
   "dependencies": {
     "asyncmemo": "^1.0.0",
     "emoji-named-characters": "^1.0.2",

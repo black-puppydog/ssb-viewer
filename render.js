@@ -1,4 +1,6 @@
+var fs = require('fs')
 var path = require('path')
+var proc = require('child_process')
 var pull = require("pull-stream")
 var marked = require("ssb-marked")
 var htime = require("human-time")
@@ -6,6 +8,7 @@ var emojis = require("emoji-named-characters")
 var cat = require("pull-cat")
 var h = require('hyperscript')
 var refs = require('ssb-ref')
+var pkg = require('./package')
 
 var emojiDir = path.join(require.resolve("emoji-named-characters"), "../pngs")
 
@@ -157,6 +160,21 @@ function renderRssItem(opts) {
   )
 }
 
+const gitHead = proc.spawnSync('git', ['rev-parse', 'HEAD'], {
+  encoding: 'utf8',
+  cwd: __dirname
+}).stdout.trim()
+const gitHeadShort = gitHead && gitHead.substr(0, 7)
+const commitUrl = pkg.homepage &&
+  pkg.homepage.replace(/\/+$/, '') + '/commit/' + gitHead
+const gitLink = !gitHead ? '' :
+  !commitUrl ? `<code title="${gitHead}">${gitHeadShort}</code>` :
+  `<a href="${commitUrl}" title="${gitHead}"><code>${gitHeadShort}</code></a>`
+
+const footer = `
+<div class=footer>AGPLv3 &copy; <a href="${pkg.homepage}">${pkg.name}</a> ${gitLink}</div>
+`
+
 function wrapPage(id) {
   return wrap(
     "<!doctype html><html><head>" +
@@ -167,7 +185,7 @@ function wrapPage(id) {
       '<meta name=viewport content="width=device-width,initial-scale=1">' +
       styles +
       "</head><body>",
-    "</body></html>"
+    footer + "\n</body></html>"
   )
 }
 
@@ -289,7 +307,7 @@ var styles = `
       text-align: center;
       text-decoration: none;
       margin-top: 20px;
-      margin-bottom: 60px;
+      margin-bottom: 30px;
       background-color: #5c7cfa;
       padding: 15px 0;
       color: #edf2ff;
@@ -302,6 +320,12 @@ var styles = `
     }
     .attending {
       text-align: center;
+    }
+    .footer {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #868e96;
     }
   </style>
 `

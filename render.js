@@ -55,6 +55,18 @@ MdRenderer.prototype.image = function(href, title, text) {
              { type: 'image/svg+xml',
                data: href,
                alt: text }).outerHTML
+  else if (/^video:/.test(text))
+    return h('video', {
+      controls: 'controls',
+      src: this.opts.blob_base + href,
+      title: title || undefined
+    }).outerHTML
+  else if (/^audio:/.test(text))
+    return h('audio', {
+      controls: 'controls',
+      src: this.opts.blob_base + href,
+      title: title || undefined
+    }).outerHTML
   else
     return h('img',
              { src: this.opts.img_base + href,

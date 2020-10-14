@@ -4,11 +4,22 @@ HTTP server for read-only views of SSB content. Serves content as web pages or a
 
 ## Install & Run
 
+Before you install or upgrade ssb-viewer, make sure the plugin is disabled.
+Otherwise sbot will crash while you install, because it tries to execute half-compiled JS.
+If you're running the install inside the same docker container as sbot, this will kill your build
+and leave you in a broken state where sbot doesn't start anymore.
+
 As a sbot plugin:
 ```sh
 mkdir -p ~/.ssb/node_modules
 cd ~/.ssb/node_modules
+
+# for a new installation:
 git clone ssb://%MeCTQrz9uszf9EZoTnKCeFeIedhnKWuB3JHW2l1g9NA=.sha256 ssb-viewer && cd ssb-viewer
+
+# for an upgrade:
+cd ssb-viewer && git pull
+
 npm install
 sbot plugins.enable ssb-viewer
 # restart sbot
